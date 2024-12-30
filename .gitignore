@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Coverage reports
+.coverage
+*.cover
+
+# Environment variables
+.env
+
+# Pytest cache
+.pytest_cache/
+tests/__pycache__/
+
+# Distribution / packaging
+*.egg-info/
+dist/
+build/
+
+# VSCode settings
+.vscode/
+
+# macOS files
+.DS_Store
+
+# Miscellaneous
+*.log
+*.sqlite3
