@@ -29,3 +29,6 @@ build/
 # Miscellaneous
 *.log
 *.sqlite3
+
+# Ignore the venv directory
+venv/
