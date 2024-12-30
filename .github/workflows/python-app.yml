@@ -23,4 +23,5 @@ jobs:
 
     - name: Run tests
       run: |
+        export PYTHONPATH=$(pwd)  # Set the PYTHONPATH to the current directory
         pytest --cov=app  # Run your tests and coverage report
