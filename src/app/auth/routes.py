@@ -1,7 +1,6 @@
 from flask import Blueprint, request, jsonify
-from db.database import users_collection
-from app.auth.utils import hash_password, verify_password, generate_token
-from app.auth.models import create_user, find_user_by_email
+from src.app.auth.utils import hash_password, verify_password, generate_token
+from src.app.auth.models import create_user, find_user_by_email
 
 auth = Blueprint('auth', __name__)
 
@@ -45,5 +44,6 @@ def login():
 
     # Generate a JWT
     token = generate_token(user['_id'])
+
 
     return jsonify({"message": "Login successful", "token": token}), 200

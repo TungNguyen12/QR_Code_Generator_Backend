@@ -1,11 +1,15 @@
 from flask import Flask, render_template, request, send_file
 from flask_cors import CORS
+from src.app.auth.routes import auth
 import qrcode
 import io
 from PIL import Image
 
+
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
+
+app.register_blueprint(auth, url_prefix='/auth')
 
 @app.route('/')
 def index():
