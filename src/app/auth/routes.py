@@ -45,5 +45,7 @@ def login():
     # Generate a JWT
     token = generate_token(user['_id'])
 
+    
+    print(f"Generated token: {token} 🔐 at login route")
 
     return jsonify({"message": "Login successful", "token": token}), 200

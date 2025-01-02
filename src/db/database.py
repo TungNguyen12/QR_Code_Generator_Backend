@@ -13,16 +13,6 @@ users_collection = db['users']
 qrcodes_collection = db['qrcodes']
 analytics_collection = db['analytics']
 
-
-users_collection = db["users"]
-
-# Insert a test document
-users_collection.insert_one({"username": "test", "email": "test@example.com"})
-
-# Fetch the document
-user = users_collection.find_one({"username": "test"})
-print(user)
-
 # Helper function to get the database instance
 def get_db():
     return db
