@@ -1,11 +1,11 @@
 from flask import Blueprint, request, jsonify, send_file
 from src.app.qrcodes.services import generate_qr_code
-from src.app.qrcodes.models import save_qr_code, get_qr_codes_by_user
+from src.app.qrcodes.models import delete_qr_code_by_id, save_qr_code, get_qr_codes_by_user
 from src.app.auth.utils import decode_token
 
 qrcodes = Blueprint('qrcodes', __name__)
 
-#Authorized Generating QR code
+#Authorized CREATE QR code
 @qrcodes.route('/generate', methods=['POST'])
 def generate_qr():
     print('Received data:', request.json)
@@ -31,7 +31,7 @@ def generate_qr():
     print(f"Create new QR code 🧑🏻‍💻, {qr_code_id}")
     return send_file(img_io, mimetype='image/png')
 
-#Authorized getting QR code by user_id
+#Authorized GET QR code
 @qrcodes.route('/my_qrcodes', methods=['GET'])
 def list_qr_codes():
     token = request.headers.get("Authorization").split(" ")[1]
@@ -47,3 +47,17 @@ def list_qr_codes():
     print(f"Your QR codes are here 📃")
     return jsonify(qr_codes), 200
 
+#Authorized DELETE QR code
+@qrcodes.route('/qrcodes/<qr_code_id>', methods=['DELETE'])
+def delete_qr_code(qr_code_id):
+    token = request.headers.get("Authorization").split(" ")[1]
+    user_id = decode_token(token)
+
+    if not user_id:
+        return jsonify({"error": "Unauthorized"}), 401
+
+    result = delete_qr_code_by_id(qr_code_id, user_id)
+    if result.deleted_count == 0:
+        return jsonify({"error": "QR code not found or unauthorized"}), 404
+
+    return jsonify({"message": "QR code deleted successfully"}), 200

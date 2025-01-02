@@ -1,5 +1,6 @@
 from datetime import datetime
 from src.db.database import get_db
+from bson.objectid import ObjectId
 
 db = get_db()
 qrcodes_collection = db['qrcodes']
@@ -28,3 +29,7 @@ def get_qr_codes_by_user(user_id):
         }
         for qr_code in qr_codes
     ]
+
+#Delete QR code by ID
+def delete_qr_code_by_id(qr_code_id, user_id):
+    return qrcodes_collection.delete_one({"_id": ObjectId(qr_code_id), "user_id": user_id})
