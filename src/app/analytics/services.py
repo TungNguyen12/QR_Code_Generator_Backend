@@ -19,4 +19,7 @@ def log_qr_code_scan(qr_code_id: ObjectId) -> InsertOneResult:
         "user_agent": request.headers.get("User-Agent"),
         "ip_address": request.remote_addr
     }
+
+    record_scan(qr_code_id, metadata)
+    print(f"Scan logged for QR Code: {qr_code_id}")
     return record_scan(qr_code_id, metadata)
