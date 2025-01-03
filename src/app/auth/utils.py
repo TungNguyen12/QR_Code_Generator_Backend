@@ -40,7 +40,7 @@ def generate_token(user_id: ObjectId) -> str:
     """
     payload: Dict[str, Any] = {
         "user_id": str(user_id),
-        "exp": datetime.utcnow() + timedelta(hours=1)  # Token expires in 1 hour
+        "exp": datetime.utcnow() + timedelta(hours=8)  # Token expires in 8 hour
     }
     return jwt.encode(payload, SECRET_KEY, algorithm="HS256")
 

@@ -1,10 +1,10 @@
 from typing import Tuple, List, Dict, Any
 
-from app.analytics.services import log_qr_code_scan
 from flask import Blueprint, request, jsonify, send_file, Response, redirect
 from werkzeug.datastructures import FileStorage
 from io import BytesIO
 from bson.objectid import ObjectId
+from src.app.analytics.services import log_qr_code_scan
 
 from src.app.qrcodes.services import generate_qr_code
 from src.app.qrcodes.models import (
@@ -27,7 +27,7 @@ def generate_qr() -> Tuple[Response, int]:
     Returns:
         A tuple containing the QR code image file and the HTTP status code.
     """
-    print('Received data:', request.form)
+    print('Received data:', request.json)
 
     token: str = request.headers.get("Authorization").split(" ")[1]
     user_id: ObjectId = decode_token(token)
@@ -35,7 +35,7 @@ def generate_qr() -> Tuple[Response, int]:
     if not user_id:
         return jsonify({"error": "Unauthorized"}), 401
 
-    data: Dict[str, Any] = request.form
+    data: Dict[str, Any] = request.json
     url: str = data.get("url")
     foreground_color: str = data.get("foreground_color", "#000000")
     background_color: str = data.get("background_color", "#ffffff")
