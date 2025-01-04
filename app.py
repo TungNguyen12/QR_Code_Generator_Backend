@@ -4,6 +4,7 @@ from src.app.auth.routes import auth
 from src.app.qrcodes.routes import qrcodes
 from src.app.analytics.routes import analytics
 
+from src.config import DEBUG, HOST, PORT
 
 
 
@@ -20,4 +21,4 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=DEBUG, host=HOST, port=PORT)

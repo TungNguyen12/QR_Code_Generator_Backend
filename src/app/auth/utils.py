@@ -4,7 +4,7 @@ from bson import ObjectId
 from datetime import datetime, timedelta
 from typing import Optional, Dict, Any
 
-SECRET_KEY = "your_secret_key"  # Replace with a strong, secret key
+from src.config import JWT_SECRET_KEY, ACCESS_TOKEN_EXPIRES, REFRESH_TOKEN_EXPIRES
 
 def hash_password(password: str) -> bytes:
     """Hashes a password using bcrypt.
@@ -29,7 +29,7 @@ def verify_password(password: str, password_hash: bytes) -> bool:
     """
     return bcrypt.checkpw(password.encode('utf-8'), password_hash)
 
-def generate_token(user_id: ObjectId) -> str:
+def generate_token(user_id: ObjectId, token_type: str = "access") -> str:
     """Generates a JWT token for a user.
 
     Args:
@@ -38,11 +38,15 @@ def generate_token(user_id: ObjectId) -> str:
     Returns:
         The generated JWT token as a string.
     """
+    expiration_time = (
+        ACCESS_TOKEN_EXPIRES if token_type == "access" else REFRESH_TOKEN_EXPIRES
+    )
+
     payload: Dict[str, Any] = {
         "user_id": str(user_id),
-        "exp": datetime.utcnow() + timedelta(hours=8)  # Token expires in 8 hour
+        "exp": datetime.utcnow() + timedelta(seconds=expiration_time)
     }
-    return jwt.encode(payload, SECRET_KEY, algorithm="HS256")
+    return jwt.encode(payload, JWT_SECRET_KEY, algorithm="HS256")
 
 def decode_token(token: str) -> Optional[ObjectId]:
     """Decodes a JWT token and returns the user ID.
@@ -55,10 +59,18 @@ def decode_token(token: str) -> Optional[ObjectId]:
     """
     try:
         payload: Dict[str, Any] = jwt.decode(
-            token, SECRET_KEY, algorithms=["HS256"]
+            token, JWT_SECRET_KEY, algorithms=["HS256"]
         )
         return ObjectId(payload["user_id"])
     except jwt.ExpiredSignatureError:
         return None
     except jwt.InvalidTokenError:  # Catch a more general exception for invalid tokens
         return None
+    
+def is_token_expired(token: str) -> bool:
+    """Check if the token is expired."""
+    try:
+        jwt.decode(token, JWT_SECRET_KEY, algorithms=["HS256"])
+        return False
+    except jwt.ExpiredSignatureError:
+        return True

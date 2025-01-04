@@ -1,6 +1,6 @@
 from typing import Tuple, List, Dict, Any
 
-from flask import Blueprint, request, jsonify, send_file, Response, redirect
+from flask import Blueprint, request, jsonify, send_file, Response
 from werkzeug.datastructures import FileStorage
 from io import BytesIO
 from bson.objectid import ObjectId
