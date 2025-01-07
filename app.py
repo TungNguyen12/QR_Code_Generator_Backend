@@ -1,11 +1,15 @@
+
+from dotenv import load_dotenv
+
+load_dotenv()
+
 from flask import Flask, render_template
 from flask_cors import CORS
 from src.app.auth.routes import auth
 from src.app.qrcodes.routes import qrcodes
 from src.app.analytics.routes import analytics
 
-from src.config import DEBUG, HOST, PORT
-
+from src.config import DEBUG, HOST, PORT, SECRET_KEY
 
 
 app = Flask(__name__)
