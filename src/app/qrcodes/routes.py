@@ -1,10 +1,9 @@
 from typing import Tuple, List, Dict, Any
-
 from flask import Blueprint, request, jsonify, send_file, Response
+from bson.objectid import ObjectId
+
 from werkzeug.datastructures import FileStorage
 from io import BytesIO
-from bson.objectid import ObjectId
-from src.app.analytics.services import log_qr_code_scan
 
 from src.app.qrcodes.services import generate_qr_code
 from src.app.qrcodes.models import (
@@ -37,6 +36,7 @@ def generate_qr() -> Tuple[Response, int]:
 
     data: Dict[str, Any] = request.json
     url: str = data.get("url")
+    title: str = data.get("title", "")
     foreground_color: str = data.get("foreground_color", "#000000")
     background_color: str = data.get("background_color", "#ffffff")
     logo: FileStorage = request.files.get("logo")
@@ -45,10 +45,10 @@ def generate_qr() -> Tuple[Response, int]:
         return jsonify({"Error: No URL provided"}), 400
 
     img_io: BytesIO = generate_qr_code(
-        url, foreground_color, background_color, logo
+        url, title, foreground_color, background_color, logo
     )
     qr_code_id: str = save_qr_code(
-        user_id, url, foreground_color, background_color, None
+        user_id, url, title, foreground_color, background_color, None
     )
 
     print(f"Create new QR code 🧑🏻‍💻, {qr_code_id}")

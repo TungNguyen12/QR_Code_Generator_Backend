@@ -6,6 +6,7 @@ from werkzeug.datastructures import FileStorage
 
 def generate_qr_code(
     url: str,
+    title: str,
     foreground_color: str = "#000000",
     background_color: str = "#ffffff",
     logo: Optional[FileStorage] = None,
@@ -14,6 +15,7 @@ def generate_qr_code(
 
     Args:
         url: The URL to encode in the QR code.
+        title: The title of QR code.
         foreground_color: The foreground color of the QR code.
         background_color: The background color of the QR code.
         logo: An optional logo image to be added to the center of the QR code.

@@ -13,6 +13,7 @@ qrcodes_collection = db['qrcodes']
 def save_qr_code(
     user_id: ObjectId,
     url: str,
+    title: str,
     foreground_color: str,
     background_color: str,
     logo_path: Optional[str] = None,
@@ -22,6 +23,7 @@ def save_qr_code(
     Args:
         user_id: The ID of the user who created the QR code.
         url: The URL that the QR code points to.
+        title: The title associated with the QR code.
         foreground_color: The foreground color of the QR code.
         background_color: The background color of the QR code.
         logo_path: The path to the logo image, if any.
@@ -32,6 +34,7 @@ def save_qr_code(
     qr_code_data: Dict[str, Any] = {
         "user_id": user_id,
         "url": url,
+        "title": title,
         "foreground_color": foreground_color,
         "background_color": background_color,
         "logo_path": logo_path,

@@ -64,7 +64,8 @@ def login() -> Tuple[Response, int]:
     print(f"Generated token: {access_token} 🔐 at login route")
 
     return jsonify({"message": "Login successful", "access_token": access_token, "refresh_token": refresh_token}), 200
-    
+
+# Generate access token with refresh token route  
 @auth.route('/auth/refresh', methods=['POST'])
 def refresh_token():
     """Refreshes an expired access token using a refresh token."""
