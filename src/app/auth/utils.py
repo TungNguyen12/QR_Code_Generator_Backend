@@ -1,6 +1,6 @@
 import bcrypt
 import jwt
-from bson import ObjectId
+from bson.objectid import ObjectId
 from datetime import datetime, timedelta
 from typing import Optional, Dict, Any
 
