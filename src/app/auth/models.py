@@ -1,10 +1,7 @@
 from typing import Dict, Any, Optional
-from pymongo import MongoClient
 from pymongo.results import InsertOneResult
-from pymongo.collection import Collection
-from pymongo.son import SON
 from bson.objectid import ObjectId
-from bson import SON  # Use SON directly from bson
+
 
 
 from src.db.database import get_db
@@ -22,7 +19,7 @@ def find_user_by_email(email: str) -> Optional[Dict[str, Any]]:
 
     Returns:
         The user document if found, otherwise None.
-    """
+    """ 
     return users_collection.find_one({"email": email})
 
 # Find a user by ID
