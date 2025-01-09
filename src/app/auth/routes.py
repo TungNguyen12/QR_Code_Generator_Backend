@@ -16,7 +16,7 @@ def register() -> Tuple[Response, int]:
         A JSON response indicating the success or failure of the registration,
         along with the corresponding HTTP status code.
     """
-    print('Received data:', request.json)
+
     data: Dict = request.json
 
     # Validate input
@@ -61,22 +61,26 @@ def login() -> Tuple[Response, int]:
     access_token: str = generate_token(user['_id'])
     refresh_token: str = generate_token(user["_id"], token_type="refresh")
 
-    print(f"Generated token: {access_token} 🔐 at login route")
-
     return jsonify({"message": "Login successful", "access_token": access_token, "refresh_token": refresh_token}), 200
 
 # Generate access token with refresh token route  
 @auth.route('/auth/refresh', methods=['POST'])
-def refresh_token():
+def refresh_token() -> Tuple[Response, int]:
     """Refreshes an expired access token using a refresh token."""
-    data = request.json
-    refresh_token = data.get("refresh_token")
+    data: Optional[Dict] = request.get_json()
+    if not data or not isinstance(data, dict):
+       return jsonify({"error": "Invalid request data"}), 400
+
+
+    refresh_token: Optional[str] = data.get("refresh_token")
+    if not isinstance(refresh_token, str):
+       return jsonify({"error": "Invalid refresh token format"}), 400
     
     # Decode the refresh token
-    user_id = decode_token(refresh_token)
+    user_id: Optional[int] = decode_token(refresh_token)
     if not user_id:
         return jsonify({"error": "Invalid or expired refresh token"}), 401
 
     # Issue a new access token
-    new_access_token = generate_token(user_id)
+    new_access_token: str = generate_token(user_id)
     return jsonify({"access_token": new_access_token}), 200

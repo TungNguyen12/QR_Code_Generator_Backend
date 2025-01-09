@@ -26,7 +26,6 @@ def generate_qr() -> Tuple[Response, int]:
     Returns:
         A tuple containing the QR code image file and the HTTP status code.
     """
-    print('Received data:', request.json)
 
     token: str = request.headers.get("Authorization").split(" ")[1]
     user_id: ObjectId = decode_token(token)
@@ -51,7 +50,6 @@ def generate_qr() -> Tuple[Response, int]:
         user_id, url, title, foreground_color, background_color, None
     )
 
-    print(f"Create new QR code 🧑🏻‍💻, {qr_code_id}")
     return send_file(img_io, mimetype='image/png', download_name=f'{qr_code_id}.png')
 
 # Authorized GET QR code
@@ -71,11 +69,8 @@ def list_qr_codes() -> Tuple[Response, int]:
     if not user_id:
         return jsonify({"error": "Unauthorized"}), 401
 
-    print(f"Your ID: {user_id} 🛂")
-
     qr_codes: List[Dict[str, Any]] = get_qr_codes_by_user(user_id)
 
-    print(f"Your QR codes are here 📃")
     return jsonify(qr_codes), 200
 
 # Authorized DELETE QR code

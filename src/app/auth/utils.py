@@ -7,8 +7,6 @@ from typing import Optional, Dict, Any
 from src.config import JWT_SECRET_KEY, ACCESS_TOKEN_EXPIRES, REFRESH_TOKEN_EXPIRES
 
 import jwt
-print(jwt.__file__)  # This will print the path of the imported jwt module
-print(jwt.__version__)
 
 def hash_password(password: str) -> bytes:
     """Hashes a password using bcrypt.

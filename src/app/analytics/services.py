@@ -21,5 +21,4 @@ def log_qr_code_scan(qr_code_id: ObjectId) -> InsertOneResult:
     }
 
     record_scan(qr_code_id, metadata)
-    print(f"Scan logged for QR Code: {qr_code_id}")
     return record_scan(qr_code_id, metadata)
