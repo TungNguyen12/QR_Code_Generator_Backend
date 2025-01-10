@@ -30,8 +30,7 @@ The QR Code Generator is a web application designed to provide users with an eas
     -   Docker
 -   **Dependencies:**
     -   Listed in the requirements.txt
--   **Frontend:** _(you can add this if you are using a specific frontend framework/library)_
-    -   You should add it if you have any
+-   **Frontend:** Typescript, React, Redux Toolkits, MongoDB, MUI
 
 ## Getting Started
 
@@ -113,7 +112,3 @@ Before you begin, ensure you have the following installed:
 ## Contributing
 
 If you want to contribute to this project, please fork the repository and create a pull request with your changes.
-
-## License
-
-This project is licensed under the [Your License] - see the LICENSE.md file for details. _If you want to add a license_

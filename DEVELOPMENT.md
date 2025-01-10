@@ -32,7 +32,9 @@ The project is organized into the following directories:
 -   **`.dockerignore`**: Specifies files to ignore during Docker builds.
 -   **`.env`**: Contains the project's environment variables (should not be committed).
 -   **`Procfile`**: Contains instructions for deployment in platforms such as Heroku.
--   **`DEVELOPMENT.md`**: The file you are reading now.
+-   **`DEVELOPMENT.md`**: Developer guidelines, setup, and contribution information for the project.
+-   **`DOCUMENTATION.md`**: Explains how the project works; detailed technical information.
+-   **`README.md`**: Introduction, usage, and installation instructions for the project.
 
 ## 2. Prerequisites
 

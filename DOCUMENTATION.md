@@ -28,7 +28,7 @@ To access the application:
 
 New users need to register before using the application:
 
-1.  Navigate to the registration page. This is typically accessed by clicking a "Register" link or button on the login page.
+1.  Navigate to the registration page. This is accessed by clicking a "Register" link or button on the login page.
 2.  Fill in the required fields:
     -   Username
     -   Email Address
@@ -49,7 +49,7 @@ Existing users can log in:
 
 Once logged in, you can generate QR codes:
 
-1.  Navigate to the "Generate QR Code" page.
+1.  Navigate to the dashboard page.
 2.  Fill in the required fields:
     -   **URL:** The URL that the QR code should point to.
     -   **Title:** (Optional) A title for your QR code.
@@ -81,6 +81,7 @@ To delete your QR Codes:
 The backend API provides the following endpoints:
 
 -   **`POST /auth/register`:** Registers a new user.
+
     -   **Request Body:**
         ```json
         {
@@ -90,31 +91,32 @@ The backend API provides the following endpoints:
         }
         ```
     -   **Response:**
+
         -   Success (201):
 
-
             ```json
             {
-              "message": "User registered successfully",
-              "user_id": "string"
+                "message": "User registered successfully",
+                "user_id": "string"
             }
             ```
+
         -   Error (400):
 
-
             ```json
             {
-               "error": "All fields are required"
+                "error": "All fields are required"
             }
             ```
+
         -   Error (400):
 
-
             ```json
             {
-              "error": "User already exists"
+                "error": "User already exists"
             }
             ```
+
 -   **`POST /auth/login`:** Logs in an existing user.
     -   **Request Body:**
         ```json
@@ -145,14 +147,15 @@ The backend API provides the following endpoints:
             }
             ```
 -   **`POST /auth/refresh`:** Refreshes an expired access token using a refresh token.
-    -   **Request Body:**
 
+    -   **Request Body:**
 
         ```json
         {
-          "refresh_token": "string"
+            "refresh_token": "string"
         }
         ```
+
     -   **Response:**
     -   Success (200):
         ```json
@@ -178,7 +181,9 @@ The backend API provides the following endpoints:
             "error": "Invalid refresh token format"
         }
         ```
+
 -   **`POST /qrcodes/generate`:** Generates a QR code.
+
     -   Requires a valid `Authorization` header containing a JWT token.
     -   **Request Body:**
         ```json
@@ -190,21 +195,23 @@ The backend API provides the following endpoints:
         }
         ```
     -   **Response**:
+
         -   Success (200): Returns a `png` image of the generated QR code.
         -   Error (401):
 
-
             ```json
-             {
+            {
                 "error": "Unauthorized"
-             }
+            }
             ```
+
         -   Error (400):
             ```json
             {
                 "error": "No URL provided"
             }
             ```
+
 -   **`GET /qrcodes/my_qrcodes`:** Retrieves all QR codes of a specific user.
     -   Requires a valid `Authorization` header containing a JWT token.
     -   **Response:**
